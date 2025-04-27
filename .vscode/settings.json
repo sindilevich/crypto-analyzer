@@ -5,6 +5,7 @@
 		"alertmanagers",
 		"asyncio",
 		"fastapi",
+		"minioadmin",
 		"pydantic",
 		"uvicorn"
 	],
