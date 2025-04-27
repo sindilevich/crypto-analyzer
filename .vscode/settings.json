@@ -1,0 +1,12 @@
+{
+	"breadcrumbs.symbolSortOrder": "name",
+	"cSpell.words": [
+		"Alertmanager",
+		"alertmanagers",
+		"asyncio",
+		"fastapi",
+		"pydantic",
+		"uvicorn"
+	],
+	"editor.insertSpaces": false
+}

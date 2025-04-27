@@ -1,0 +1,6 @@
+atapi
+motor						# Async MongoDB driver
+pydantic
+python-jose[cryptography]	# For JWT token creation
+redis[asyncio]				# Async Redis client
+uvicorn
