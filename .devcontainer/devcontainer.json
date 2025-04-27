@@ -1,0 +1,44 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
+{
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"connor4312.codesong",
+				"discretegames.f5anything",
+				"eamodio.gitlens",
+				"EditorConfig.EditorConfig",
+				"GitHub.copilot",
+				"ms-azuretools.vscode-docker",
+				"ms-python.black-formatter",
+				"ms-python.pylint",
+				"ms-python.python",
+				"ms-toolsai.jupyter",
+				"mutantdino.resourcemonitor",
+				"njpwerner.autodocstring",
+				"redhat.vscode-yaml",
+				"streetsidesoftware.code-spell-checker"
+			],
+			"settings": {
+				"terminal.integrated.profiles.linux": {
+					"bash": {
+						"path": "/bin/bash",
+						"icon": "terminal-bash"
+					}
+				},
+				"terminal.integrated.defaultProfile.linux": "bash",
+				"python.defaultInterpreterPath": "/usr/local/bin/python"
+			}
+		}
+	},
+	"dockerComposeFile": "docker-compose.yml",
+	"features": {
+	},
+	"mounts": [
+	],
+	"name": "Crypto Analyzer",
+	"postCreateCommand": "pip3 install --user -r app/requirements.txt",
+	"remoteUser": "root",
+	"service": "crypto-analyzer-development",
+	"shutdownAction": "stopCompose",
+	"workspaceFolder": "/workspace"
+}

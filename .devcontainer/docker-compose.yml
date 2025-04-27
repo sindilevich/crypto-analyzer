@@ -1,0 +1,59 @@
+version: '3.9'
+
+services:
+  crypto-analyzer-development:
+    build:
+      context: ..
+      dockerfile: .devcontainer/Dockerfile
+    command: sleep infinity
+    container_name: crypto-analyzer-development
+    ports:
+      - "8180:8080"
+    volumes:
+      - ../:/workspace:cached
+      - ~/.ssh:/root/.ssh
+    environment:
+      - MONGO_URL=mongodb://mongodb:27017
+      - REDIS_URL=redis://redis:6379
+      - SECRET_KEY=your_secret_key_here
+    depends_on:
+      - crypto-analyzer-mongodb
+      - crypto-analyzer-redis
+
+  crypto-analyzer-mongodb:
+    image: mongo:latest
+    container_name: crypto-analyzer-mongodb
+    ports:
+      - "28017:27017"
+
+  crypto-analyzer-redis:
+    image: redis:latest
+    container_name: crypto-analyzer-redis
+    ports:
+      - "6479:6379"
+
+  crypto-analyzer-minio:
+    image: minio/minio
+    container_name: crypto-analyzer-minio
+    ports:
+      - "9100:9000"
+    environment:
+      MINIO_ACCESS_KEY: minioadmin
+      MINIO_SECRET_KEY: minioadmin
+    command: server /data
+
+  crypto-analyzer-prometheus:
+    image: prom/prometheus
+    container_name: crypto-analyzer-prometheus
+    ports:
+      - "9190:9090"
+    volumes:
+      - ./prometheus:/etc/prometheus
+
+  crypto-analyzer-grafana:
+    image: grafana/grafana
+    container_name: crypto-analyzer-grafana
+    ports:
+      - "3100:3000"
+    depends_on:
+      - crypto-analyzer-prometheus
