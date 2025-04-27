@@ -1,4 +1,4 @@
-atapi
+fastapi
 motor						# Async MongoDB driver
 pydantic
 python-jose[cryptography]	# For JWT token creation
