@@ -1,8 +1,7 @@
-import os
-
 from fastapi import FastAPI, WebSocket
 
-from app.routes import auth_routes
+from app.routes import auth_routes, websocket_routes
+
 
 app = FastAPI(
     title="Crypto Trading Bot",
@@ -11,15 +10,9 @@ app = FastAPI(
 )
 
 app.include_router(auth_routes.router)
+app.include_router(websocket_routes.router)
 
 
 @app.get("/")
 async def root():
     return {"message": "Hello Crypto World!"}
-
-
-@app.websocket("/ws")
-async def websocket_endpoint(websocket: WebSocket):
-    await websocket.accept()
-    await websocket.send_text("Hello WebSocket World!")
-    await websocket.close()

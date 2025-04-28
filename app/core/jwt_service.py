@@ -34,6 +34,31 @@ class JwtService:
         )
         return encoded_jwt
 
+    def verify_access_token(self, token: str):
+        """
+        Verify a JWT access token.
+        Args:
+            token (str): The JWT access token to verify.
+        Returns:
+            dict: The decoded data from the token if valid.
+        Raises:
+            ValueError: If the token is invalid or expired.
+        """
+
+        try:
+            payload = jwt.decode(
+                token,
+                self.app_config.access_token_secret,
+                algorithms=[self.app_config.access_token_algorithm],
+            )
+            return payload
+        except jwt.ExpiredSignatureError as e:
+            raise ValueError("Token has expired") from e
+        except jwt.JWTClaimsError as e:
+            raise ValueError("Invalid claims") from e
+        except jwt.JWTError as e:
+            raise ValueError("Invalid token") from e
+
     def __calculate_expire(self):
         """
         Calculate the expiration time for the JWT token.

@@ -3,7 +3,7 @@ from typing import Annotated
 from fastapi import APIRouter, Depends, HTTPException, status
 from passlib.context import CryptContext
 
-from app.config import get_settings
+from app.core.dependencies import get_jwt_service
 from app.core.jwt_service import JwtService
 from app.db.mongo import get_user_collection
 from app.schemas.common_response_schema import ErrorDetail, Message
@@ -15,16 +15,6 @@ from app.schemas.user_schema import (
 from app.services.user_service import DuplicateUserError, UserService
 
 router = APIRouter(prefix="/api/v1")
-
-
-def __get_jwt_service():
-    """
-    Get the JWTService instance.
-    Returns:
-        JwtService: The JWTService instance.
-    """
-
-    return JwtService(get_settings())
 
 
 def __get_user_service():
@@ -46,7 +36,7 @@ def __get_user_service():
 )
 async def login_user(
     user: UserLogin,
-    jwt_service: Annotated[JwtService, Depends(__get_jwt_service)],
+    jwt_service: Annotated[JwtService, Depends(get_jwt_service)],
     user_service: Annotated[UserService, Depends(__get_user_service)],
 ):
     """

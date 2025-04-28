@@ -21,7 +21,7 @@ class AppSettings(BaseSettings):
 
 
 @lru_cache
-def get_settings():
+def get_app_settings():
     """
     Get the application settings.
     Returns:
