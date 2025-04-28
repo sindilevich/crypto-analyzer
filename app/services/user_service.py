@@ -1,6 +1,6 @@
+from motor.motor_asyncio import AsyncIOMotorCollection
 from passlib.context import CryptContext
 
-from app.db.mongo import get_user_collection
 from app.schemas.user_schema import UserCreate
 
 
@@ -18,6 +18,9 @@ class DuplicateUserError(Exception):
 class UserService:
     """Service for user-related operations."""
 
+    def __init__(self, collection: AsyncIOMotorCollection, pwd_context: CryptContext):
+        self.collection = collection
+        self.__pwd_context = pwd_context
 
     async def create_user(self, user: UserCreate):
         """

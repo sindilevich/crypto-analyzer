@@ -1,16 +1,30 @@
 from typing import Annotated
 
 from fastapi import APIRouter, Depends, HTTPException, status
+from passlib.context import CryptContext
 
+from app.db.mongo import get_user_collection
 from app.schemas.user_schema import UserCreate
 from app.services.user_service import DuplicateUserError, UserService
 
 router = APIRouter(prefix="/api/v1")
 
 
+def __get_user_service():
+    """
+    Get the UserService instance.
+    Returns:
+        UserService: The UserService instance.
+    """
+
+    return UserService(
+        get_user_collection(), CryptContext(schemes=["bcrypt"], deprecated="auto")
+    )
+
+
 @router.post("/register", status_code=status.HTTP_201_CREATED)
 async def register_user(
-    user: UserCreate, user_service: Annotated[UserService, Depends(UserService)]
+    user: UserCreate, user_service: Annotated[UserService, Depends(__get_user_service)]
 ):
     """
     Register a new user.
