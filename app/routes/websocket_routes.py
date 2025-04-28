@@ -33,7 +33,12 @@ async def websocket_endpoint(
         await websocket.close(code=1008)
         return
 
-    user = jwt_service.verify_access_token(token)
+    try:
+        user = jwt_service.verify_access_token(token)
+    except ValueError as e:
+        print(f"Token verification failed: {e}")
+        await websocket.close(code=1008)
+        return
 
     if not user:
         await websocket.close(code=1008)
