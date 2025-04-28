@@ -34,11 +34,14 @@
 	},
 	"dockerComposeFile": "docker-compose.yml",
 	"features": {
+		"ghcr.io/devcontainers/features/node": {
+			"version": "lts"
+		}
 	},
 	"mounts": [
 	],
 	"name": "Crypto Analyzer",
-	"postCreateCommand": "pip3 install --user -r app/requirements.txt",
+	"postCreateCommand": "./devops/scripts/environment_setup.sh",
 	"remoteUser": "root",
 	"service": "crypto-analyzer-development",
 	"shutdownAction": "stopCompose",

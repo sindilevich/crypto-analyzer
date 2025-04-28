@@ -4,12 +4,14 @@
 		"Alertmanager",
 		"alertmanagers",
 		"asyncio",
+		"devcontainers",
 		"dotenv",
 		"fastapi",
 		"minioadmin",
 		"passlib",
 		"pydantic",
-		"uvicorn"
+		"uvicorn",
+		"wscat"
 	],
 	"editor.insertSpaces": false
 }
