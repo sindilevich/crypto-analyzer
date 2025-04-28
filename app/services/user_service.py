@@ -13,7 +13,7 @@ class DuplicateUserError(Exception):
         return f"User with username '{self.username}' or email '{self.email}' already registered"
 
 
-class UserProvider:
+class UserService:
     def __init__(self):
         self.collection = get_user_collection()
         self.__pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")

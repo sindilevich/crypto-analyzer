@@ -2,15 +2,15 @@ from typing import Annotated
 
 from fastapi import APIRouter, Depends, HTTPException, status
 
-from app.db.user_provider import DuplicateUserError, UserProvider
 from app.schemas.user_schema import UserCreate
+from app.services.user_service import DuplicateUserError, UserService
 
 router = APIRouter(prefix="/api/v1")
 
 
 @router.post("/register", status_code=status.HTTP_201_CREATED)
 async def register_user(
-    user: UserCreate, users_provider: Annotated[UserProvider, Depends(UserProvider)]
+    user: UserCreate, users_provider: Annotated[UserService, Depends(UserService)]
 ):
     """
     Register a new user.
