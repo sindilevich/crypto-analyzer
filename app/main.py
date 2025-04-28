@@ -2,7 +2,7 @@ import os
 
 from fastapi import FastAPI, WebSocket
 
-from app.routes import auth
+from app.routes import auth_routes
 
 app = FastAPI(
     title="Crypto Trading Bot",
@@ -10,7 +10,7 @@ app = FastAPI(
     version="0.1.0",
 )
 
-app.include_router(auth.router)
+app.include_router(auth_routes.router)
 
 
 @app.get("/")

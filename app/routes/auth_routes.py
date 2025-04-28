@@ -3,7 +3,7 @@ from typing import Annotated
 from fastapi import APIRouter, Depends, HTTPException, status
 
 from app.db.user_provider import DuplicateUserError, UserProvider
-from app.schemas.user import UserCreate
+from app.schemas.user_schema import UserCreate
 
 router = APIRouter(prefix="/api/v1")
 

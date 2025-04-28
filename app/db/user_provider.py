@@ -1,7 +1,7 @@
 from passlib.context import CryptContext
 
 from app.db.mongo import get_user_collection
-from app.schemas.user import UserCreate
+from app.schemas.user_schema import UserCreate
 
 
 class DuplicateUserError(Exception):

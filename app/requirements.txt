@@ -1,7 +1,7 @@
 fastapi
 motor						# Async MongoDB driver
 passlib[bcrypt]				# For password hashing
-pydantic[email]				# For email validation
+pydantic[email]				# For model validation
 python-jose[cryptography]	# For JWT token creation
 redis[asyncio]				# Async Redis client
 uvicorn

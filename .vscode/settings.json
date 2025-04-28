@@ -6,6 +6,7 @@
 		"asyncio",
 		"fastapi",
 		"minioadmin",
+		"passlib",
 		"pydantic",
 		"uvicorn"
 	],
