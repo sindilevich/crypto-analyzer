@@ -1,8 +1,9 @@
+import logging
 from typing import Annotated
 
 from fastapi import APIRouter, Depends, WebSocket, WebSocketDisconnect
 
-from app.core.dependencies import get_jwt_service
+from app.core.dependencies import get_jwt_service, get_logger
 from app.core.jwt_service import JwtService
 
 AUTHORIZATION_HEADER = "Authorization"
@@ -13,7 +14,9 @@ router = APIRouter(prefix="/websocket/v1")
 
 @router.websocket("/trade-stream")
 async def websocket_endpoint(
-    websocket: WebSocket, jwt_service: Annotated[JwtService, Depends(get_jwt_service)]
+    websocket: WebSocket,
+    logger: Annotated[logging.Logger, Depends(get_logger)],
+    jwt_service: Annotated[JwtService, Depends(get_jwt_service)],
 ):
     """
     WebSocket endpoint for trading stream.
@@ -36,7 +39,7 @@ async def websocket_endpoint(
     try:
         user = jwt_service.verify_access_token(token)
     except ValueError as e:
-        print(f"Token verification failed: {e}")
+        logger.error("Token verification failed: %s", str(e))
         await websocket.close(code=1008)
         return
 
@@ -49,6 +52,6 @@ async def websocket_endpoint(
             data = await websocket.receive_text()
             await websocket.send_text(f"Hello {user['sub']}, you sent: {data}")
     except WebSocketDisconnect:
-        print(f"Client {user['sub']} disconnected")
+        logger.info("Client [%s] disconnected", user["sub"])
     finally:
-        print("Closing WebSocket connection")
+        logger.info("Closing WebSocket connection")
