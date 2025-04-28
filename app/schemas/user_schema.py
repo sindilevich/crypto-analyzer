@@ -5,6 +5,11 @@ from pydantic.alias_generators import to_camel
 
 
 class UserCreate(BaseModel):
+    """
+    UserCreate schema for creating a new user.
+    This schema is used to validate the data when creating a new user.
+    """
+
     model_config = {
         "alias_generator": to_camel,
     }

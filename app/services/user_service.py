@@ -5,6 +5,8 @@ from app.schemas.user_schema import UserCreate
 
 
 class DuplicateUserError(Exception):
+    """Exception raised when a user with the same username or email already exists."""
+
     def __init__(self, username: str, email: str):
         self.username = username
         self.email = email
@@ -14,11 +16,20 @@ class DuplicateUserError(Exception):
 
 
 class UserService:
-    def __init__(self):
-        self.collection = get_user_collection()
-        self.__pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+    """Service for user-related operations."""
+
 
     async def create_user(self, user: UserCreate):
+        """
+        Create a new user in the database.
+        Args:
+            user (UserCreate): The user data to create.
+        Returns:
+            Any: The ID of the created user.
+        Raises:
+            DuplicateUserError: If a user with the same username or email already exists.
+        """
+
         if await self.__check_user_exists(user.username, user.email):
             raise DuplicateUserError(user.username, user.email)
 
@@ -34,6 +45,15 @@ class UserService:
         return result.inserted_id
 
     async def __check_user_exists(self, username, email):
+        """
+        Check if a user with the given username or email already exists in the database.
+        Args:
+            username (str): The username to check.
+            email (str): The email to check.
+        Returns:
+            bool: True if the user exists, False otherwise.
+        """
+
         user = await self.collection.find_one(
             {"$or": [{"username": username}, {"email": email}]}
         )

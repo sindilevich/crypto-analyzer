@@ -10,4 +10,10 @@ db = client[app_settings.mongodb_db]
 
 
 def get_user_collection():
+    """
+    Get the user collection from the MongoDB database.
+    Returns:
+        AsyncIOMotorCollection: The user collection.
+    """
+
     return db[app_settings.mongodb_users_collection]

@@ -10,19 +10,20 @@ router = APIRouter(prefix="/api/v1")
 
 @router.post("/register", status_code=status.HTTP_201_CREATED)
 async def register_user(
-    user: UserCreate, users_provider: Annotated[UserService, Depends(UserService)]
+    user: UserCreate, user_service: Annotated[UserService, Depends(UserService)]
 ):
     """
     Register a new user.
-
     Args:
         user (UserCreate): The user data to register.
-
+        user_service (UserService): The UserService instance.
     Returns:
         dict: A message indicating successful registration.
+    Raises:
+        HTTPException: If a user with the same username or email already exists.
     """
     try:
-        await users_provider.create_user(user)
+        await user_service.create_user(user)
         return {"message": f"User {user.username} registered successfully"}
     except DuplicateUserError as e:
         raise HTTPException(
