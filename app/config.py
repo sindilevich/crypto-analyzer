@@ -11,6 +11,10 @@ class AppSettings(BaseSettings):
 
     model_config = {"env_file": "app/.env", "env_file_encoding": "utf-8"}
 
+    access_token_secret: str
+    access_token_algorithm: str
+    access_token_expires_in_minutes: int
+
     mongodb_uri: str
     mongodb_db: str
     mongodb_users_collection: str

@@ -1,7 +1,7 @@
 from motor.motor_asyncio import AsyncIOMotorCollection
 from passlib.context import CryptContext
 
-from app.schemas.user_schema import UserCreate
+from app.schemas.user_schema import UserCreate, UserLogin
 
 
 class DuplicateUserError(Exception):
@@ -21,6 +21,23 @@ class UserService:
     def __init__(self, collection: AsyncIOMotorCollection, pwd_context: CryptContext):
         self.collection = collection
         self.__pwd_context = pwd_context
+
+    async def authenticate_user(self, user: UserLogin):
+        """
+        Authenticate a user by checking the username and password.
+        Args:
+            user (UserLogin): The user data to authenticate.
+        Raises:
+            ValueError: If the username or password is incorrect.
+        """
+
+        db_user = await self.collection.find_one({"username": user.username})
+
+        if not db_user:
+            raise ValueError("Incorrect username or password")
+
+        if not self.__pwd_context.verify(user.password, db_user["password"]):
+            raise ValueError("Incorrect username or password")
 
     async def create_user(self, user: UserCreate):
         """
