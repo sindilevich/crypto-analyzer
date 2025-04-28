@@ -1,12 +1,13 @@
 from motor.motor_asyncio import AsyncIOMotorClient
 
-MONGODB_URI = "mongodb://crypto-analyzer-mongodb:27017"
-MONGODB_DB = "crypto_app"
-USERS_COLLECTION = "users"
+from app.config import get_settings
 
-client = AsyncIOMotorClient(MONGODB_URI)
-db = client[MONGODB_DB]
+
+app_settings = get_settings()
+
+client = AsyncIOMotorClient(app_settings.mongodb_uri)
+db = client[app_settings.mongodb_db]
 
 
 def get_user_collection():
-    return db[USERS_COLLECTION]
+    return db[app_settings.mongodb_users_collection]

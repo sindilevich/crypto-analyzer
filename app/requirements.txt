@@ -2,6 +2,8 @@ fastapi
 motor						# Async MongoDB driver
 passlib[bcrypt]				# For password hashing
 pydantic[email]				# For model validation
+pydantic-settings			# For environment variable management
+python-dotenv 				# For loading environment variables from .env files
 python-jose[cryptography]	# For JWT token creation
 redis[asyncio]				# Async Redis client
 uvicorn

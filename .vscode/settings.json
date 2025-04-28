@@ -4,6 +4,7 @@
 		"Alertmanager",
 		"alertmanagers",
 		"asyncio",
+		"dotenv",
 		"fastapi",
 		"minioadmin",
 		"passlib",
