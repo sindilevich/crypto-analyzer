@@ -25,9 +25,7 @@ class JwtService:
         """
 
         to_encode = data.copy()
-        expire = datetime.now(timezone.utc) + timedelta(
-            minutes=self.app_config.access_token_expires_in_minutes
-        )
+        expire = self.__calculate_expire()
         to_encode.update({"exp": expire})
         encoded_jwt = jwt.encode(
             to_encode,
@@ -35,3 +33,20 @@ class JwtService:
             algorithm=self.app_config.access_token_algorithm,
         )
         return encoded_jwt
+
+    def __calculate_expire(self):
+        """
+        Calculate the expiration time for the JWT token.
+        The expiration time is set to the current time plus the configured expiration time in minutes.
+        The expiration time is rounded to the next minute.
+        Returns:
+            datetime: The expiration time for the JWT token.
+        """
+
+        expire = datetime.now(timezone.utc) + timedelta(
+            minutes=self.app_config.access_token_expires_in_minutes
+        )
+
+        # Round the expiration time to the next minute
+        expire = expire.replace(second=0, microsecond=0) + timedelta(minutes=1)
+        return expire
