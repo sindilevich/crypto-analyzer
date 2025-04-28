@@ -9,6 +9,7 @@
 				"EditorConfig.EditorConfig",
 				"GitHub.copilot",
 				"humao.rest-client",
+				"mongodb.mongodb-vscode",
 				"ms-azuretools.vscode-docker",
 				"ms-python.black-formatter",
 				"ms-python.pylint",
