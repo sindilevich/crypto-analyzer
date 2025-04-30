@@ -6,7 +6,7 @@ set -e
 # Install Python packages using pip
 echo "Installing Python packages..."
 pip install --upgrade pip
-pip install --user --requirement ./app/requirements.txt
+pip install --user --requirement ./app/requirements.txt --resume-retries 5
 
 # Install wscat globally using npm
 echo "Installing wscat..."

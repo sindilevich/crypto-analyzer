@@ -42,8 +42,8 @@ docker-compose up --build
 
 Visit:
 
-- API: http://localhost:8000
-- WebSocket: ws://localhost:8000/ws
+- API: http://localhost:8180
+- WebSocket: ws://localhost:8180/ws
 - MongoDB: port `27017`
 - Redis: port `6379`
 - MinIO: http://localhost:9000 (minioadmin:minioadmin)
@@ -58,3 +58,9 @@ Feel free to fork, hack, break, and improve it!
 ## 📜 License
 
 MIT License (open and free forever).
+
+## 🔗 Useful Links
+
+Setting up the uvicorn logger: https://stackoverflow.com/a/77007723
+
+How to initialize a global object or variable and reuse it in every FastAPI endpoint? https://stackoverflow.com/a/76322910
