@@ -35,12 +35,6 @@ class UserLoginResponse(BaseModel):
     This schema is used to validate the data returned when a user logs in successfully.
     """
 
-    model_config = {
-        "alias_generator": AliasGenerator(
-            serialization_alias=to_camel,
-        )
-    }
-
     access_token: str
     token_type: str
 

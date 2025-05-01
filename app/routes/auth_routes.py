@@ -1,6 +1,6 @@
 from typing import Annotated
 
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, Form, HTTPException, status
 from passlib.context import CryptContext
 
 from app.core.dependencies import get_jwt_service
@@ -14,7 +14,7 @@ from app.schemas.user_schema import (
 )
 from app.services.user_service import DuplicateUserError, UserService
 
-router = APIRouter(prefix="/api/v1")
+router = APIRouter(prefix="/api/v1/auth", tags=["Auth"])
 
 
 def __get_user_service():
@@ -35,16 +35,18 @@ def __get_user_service():
     responses={status.HTTP_401_UNAUTHORIZED: {"model": ErrorDetail}},
 )
 async def login_user(
-    user: UserLogin,
     jwt_service: Annotated[JwtService, Depends(get_jwt_service)],
     user_service: Annotated[UserService, Depends(__get_user_service)],
+    username: str = Form(...),
+    password: str = Form(...),
 ):
     """
     Login a user and return a JWT token.
     Args:
-        user (UserLogin): The user data to login.
         jwt_service (JwtService): The JWTService instance.
         user_service (UserService): The UserService instance.
+        username (str): The username of the user.
+        password (str): The password of the user.
     Returns:
         dict: A dictionary containing the JWT token.
     Raises:
@@ -52,6 +54,8 @@ async def login_user(
     """
 
     try:
+        user = UserLogin(username=username, password=password)
+
         await user_service.authenticate_user(user)
         token = jwt_service.create_access_token(data={"sub": user.username})
         return UserLoginResponse(

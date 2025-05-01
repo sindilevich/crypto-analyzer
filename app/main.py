@@ -1,4 +1,4 @@
-from fastapi import FastAPI, WebSocket
+from fastapi import FastAPI
 
 from app.routes import auth_routes, websocket_routes
 
