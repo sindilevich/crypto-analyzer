@@ -1,7 +1,18 @@
 import logging
 
 from app.config import get_app_settings
+from app.core.auth_service import AuthService
 from app.core.jwt_service import JwtService
+
+
+def get_auth_service():
+    """
+    Get the AuthService instance.
+    Returns:
+        AuthService: The AuthService instance.
+    """
+
+    return AuthService(get_jwt_service())
 
 
 def get_jwt_service():

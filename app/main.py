@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 
-from app.routes import auth_routes, websocket_routes
+from app.routes import auth_routes, trade_routes, websocket_routes
 
 
 app = FastAPI(
@@ -10,6 +10,7 @@ app = FastAPI(
 )
 
 app.include_router(auth_routes.router)
+app.include_router(trade_routes.router)
 app.include_router(websocket_routes.router)
 
 
