@@ -17,6 +17,7 @@ class AppSettings(BaseSettings):
 
     mongodb_uri: str
     mongodb_db: str
+    mongodb_trades_collection: str
     mongodb_users_collection: str
 
 
